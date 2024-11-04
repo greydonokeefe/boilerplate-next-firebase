@@ -28,13 +28,11 @@ export default function Dashboard() {
     };
 
     return (
-        <>
-            <div className="p-4">
-                <h1 className="text-2xl font-bold">Dashboard</h1>
-                <Button onClick={handleLogout} className="mt-4">
-                    Logout
-                </Button>
-            </div>
-        </>
+        <div className="p-4">
+            <h1 className="text-2xl font-bold">Dashboard</h1>
+            <Button onClick={handleLogout} className="mt-4">
+                Logout
+            </Button>
+        </div>
     )
 }

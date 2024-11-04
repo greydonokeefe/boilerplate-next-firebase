@@ -9,7 +9,7 @@ import { useToast } from "@/hooks/use-toast"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 
-import { signInWithEmailAndPassword } from 'firebase/auth'
+import { signInWithEmailAndPassword, setPersistence, browserLocalPersistence, browserSessionPersistence } from "firebase/auth"
 import { auth } from '@/lib/firebase'
 
 export default function LoginForm() {
@@ -20,13 +20,20 @@ export default function LoginForm() {
     const { toast } = useToast();
     const router = useRouter()
 
-    const handleLogin = async (e: React.FormEvent) => {
+    const handleLogin = async (e: React.FormEvent, persistenceType: "local" | "session" = "local") => {
         e.preventDefault();
         setLoading(true);
-
-        try {            
+    
+        try {
+            // Set persistence based on user preference
+            const persistence = persistenceType === "local" ? browserLocalPersistence : browserSessionPersistence;
+            await setPersistence(auth, persistence);
+    
+            // Proceed with sign-in
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
+    
+            // Redirect to user's dashboard after login
             router.push(`/dashboard/${user.uid}`);
         } catch (error: any) {
             toast({
@@ -37,7 +44,7 @@ export default function LoginForm() {
         } finally {
             setLoading(false);
         }
-    };
+    }
 
     return (
         <div className='w-screen h-screen flex items-center justify-center'>

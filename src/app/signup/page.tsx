@@ -9,9 +9,8 @@ import { useToast } from "@/hooks/use-toast"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, setPersistence, browserLocalPersistence, browserSessionPersistence } from "firebase/auth";
 import { auth } from '@/lib/firebase'
-import { create } from 'domain'
 
 export default function SignUpForm() {
     const [name, setName] = useState('')
@@ -21,26 +20,33 @@ export default function SignUpForm() {
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
     const router = useRouter()
-    const  { toast } = useToast()
+    const { toast } = useToast()
 
-    const handleSignup = async (e: React.FormEvent) => {
+    const handleSignup = async (e: React.FormEvent, persistenceType: "local" | "session" = "local") => {
         e.preventDefault();
         setLoading(true);
     
         try {
+            // Set persistence based on user preference
+            const persistence = persistenceType === "local" ? browserLocalPersistence : browserSessionPersistence;
+            await setPersistence(auth, persistence);
+    
+            // Proceed with sign-up
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
+    
+            // Redirect to user's dashboard after sign-up
             router.push(`/dashboard/${user.uid}`);
         } catch (error: any) {
-          toast({
-            variant: "destructive",
-            title: "Error",
-            description: error.message,
-          });
+            toast({
+                variant: "destructive",
+                title: "Error",
+                description: error.message,
+            });
         } finally {
-          setLoading(false);
+            setLoading(false);
         }
-      };
+    };
 
     return (
         <div className='w-screen h-screen flex items-center justify-center'>
