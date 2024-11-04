@@ -1,10 +1,10 @@
 # 🚀 Next.js Boilerplate App 🚀
 
-Welcome to the **Next.js Boilerplate**—your one-stop shop for a solid starting point! This project combines the power of **Next.js (v15.0.2)**, **TypeScript**, **Tailwind CSS**, and **Firebase Authentication** into one snazzy, secure package. With a protected dashboard route baked right in, you’ll be up and running faster than you can say “Hello, World!”
+Welcome to the **Next.js Boilerplate**—your one-stop shop for a solid starting point! This project combines the power of **Next.js (v14.2.16)**, **TypeScript**, **Tailwind CSS**, and **Firebase Authentication** into one snazzy, secure package. With a protected dashboard route baked right in, you’ll be up and running faster than you can say “Hello, World!”
 
 ## 🎉 Features
 
-- **Next.js v15.0.2**: Built on the latest version, because who doesn’t love staying current?
+- **Next.js v14.2.16**: Built on the latest version, because who doesn’t love staying current?
 - **TypeScript**: Enjoy the safety and scalability of typed JavaScript, with no loose ends.
 - **Tailwind CSS**: Lookin' good without the hassle! Style your app fast with Tailwind’s utility-first CSS.
 - **Firebase Authentication**: We’ve got you covered on login—Firebase Auth makes it a breeze to add secure user authentication.
